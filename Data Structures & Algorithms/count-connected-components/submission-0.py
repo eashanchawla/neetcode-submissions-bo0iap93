@@ -1,0 +1,25 @@
+class Solution:
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        adjList = {i: [] for i in range(n)}
+        for a, b in edges:
+            adjList[a].append(b)
+            adjList[b].append(a)
+        
+        from collections import deque
+        q = deque()
+        visited = []
+        parts = 0
+        for i in range(n):
+            q.append(i)
+            if i not in visited:
+                while q:
+                    curr = q.popleft()
+                    for neighbor in adjList[curr]:
+                        if neighbor in visited:
+                            continue
+                        q.append(neighbor)
+                        visited.append(neighbor)
+                parts += 1
+        return parts
+                    
+
